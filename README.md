@@ -1,16 +1,55 @@
-# React + Vite
+# Cliente React Mascotas
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Cliente web en React + TypeScript para consumir la API de mascotas en:
 
-Currently, two official plugins are available:
+- `https://api-mascotas-70fo.onrender.com`
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Instalacion
 
-## React Compiler
+```bash
+pnpm install
+cp .env.example .env
+pnpm dev
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Variables de entorno
 
-## Expanding the ESLint configuration
+Archivo `.env`:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```env
+VITE_API_BASE_URL=https://api-mascotas-70fo.onrender.com
+```
+
+## Scripts
+
+- `pnpm dev`: levanta el cliente en desarrollo.
+- `pnpm build`: construye para produccion.
+- `pnpm lint`: ejecuta ESLint.
+- `pnpm preview`: sirve la build local.
+
+## Flujo de login admin
+
+1. Ir a `/login`.
+2. Enviar credenciales admin (`admin@protectora.local` / `Admin1234!`).
+3. El token JWT se guarda en memoria + `localStorage`.
+4. Acceder a `/admin` para crear/editar/eliminar mascotas.
+5. Si la API responde `401`, la sesion se limpia y el usuario vuelve a login.
+
+## Endpoints usados desde la app
+
+- Publicos:
+  - `GET /mascotas`
+  - `GET /mascotas/{id}`
+  - `POST /adopciones`
+- Auth:
+  - `POST /auth/login`
+- Admin (Bearer):
+  - `POST /mascotas`
+  - `PUT /mascotas/{id}`
+  - `DELETE /mascotas/{id}`
+
+## Mejoras futuras
+
+- Formulario admin dedicado para editar con preview de cambios por campo.
+- Paginacion/filtros server-side cuando el listado crezca.
+- Tests E2E para flujos clave (listado, adopcion, login y CRUD admin).
